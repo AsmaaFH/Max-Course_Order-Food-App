@@ -1,11 +1,13 @@
 import React from 'react';
+import Cart from './components/Cart/Cart';
 import Hearder from './components/Layout/Hearder';
 import Meals from './components/Meals/Meals';
 
 function App() {
   return (
     <>
-      <Hearder></Hearder>
+      <Cart />
+      <Hearder />
       <main>
         <Meals />
       </main>
