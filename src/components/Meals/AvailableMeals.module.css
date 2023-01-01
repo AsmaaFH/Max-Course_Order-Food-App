@@ -1,4 +1,5 @@
-.meals {
+.meals,
+section {
   max-width: 60rem;
   width: 90%;
   margin: 2rem auto;
@@ -9,6 +10,10 @@
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+.error-text {
+  color: red;
 }
 
 @keyframes meals-appear {
