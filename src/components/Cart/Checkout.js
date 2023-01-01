@@ -4,10 +4,10 @@ import classes from './Checkout.module.css';
 const Checkout = (props) => {
   const confirmHandler = (event) => {
     event.preventDefault();
-    console.log('Submitted');
   };
+
   return (
-    <form onSubmit={confirmHandler}>
+    <form className={classes.form} onSubmit={confirmHandler}>
       <div className={classes.control}>
         <label htmlFor="name">Your Name</label>
         <input type="text" id="name" />
@@ -17,17 +17,19 @@ const Checkout = (props) => {
         <input type="text" id="street" />
       </div>
       <div className={classes.control}>
-        <label htmlFor="postal">Postal</label>
+        <label htmlFor="postal">Postal Code</label>
         <input type="text" id="postal" />
       </div>
       <div className={classes.control}>
         <label htmlFor="city">City</label>
         <input type="text" id="city" />
       </div>
-      <button type="button" onClick={props.onCancel}>
-        Cancel
-      </button>
-      <button type="submit">Confirm</button>
+      <div className={classes.actions}>
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
+        <button className={classes.submit}>Confirm</button>
+      </div>
     </form>
   );
 };
