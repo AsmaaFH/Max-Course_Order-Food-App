@@ -5,6 +5,7 @@ import MealItem from './MealItem/MealItem';
 
 const AvailableMeals = () => {
   const [meals, setLoadedMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchMeals = async () => {
@@ -18,6 +19,7 @@ const AvailableMeals = () => {
         loadedMeals.push({ id, ...mealsData[id] });
       }
       setLoadedMeals(loadedMeals);
+      setIsLoading(false);
     };
     fetchMeals();
   }, []);
@@ -33,9 +35,12 @@ const AvailableMeals = () => {
   ));
   return (
     <section className={classes.meals}>
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
+      {isLoading && <Card>Loading...</Card>}
+      {!isLoading && (
+        <Card>
+          <ul>{mealsList}</ul>
+        </Card>
+      )}
     </section>
   );
 };
