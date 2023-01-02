@@ -7,7 +7,12 @@ import Checkout from './Checkout';
 
 const Cart = (props) => {
   const [isCheckout, setIsCheckout] = useState(false);
+  const [isSubmiting, setIsSubmiting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const cartCtx = useContext(CartContext);
+
+  console.log('cartCtx', cartCtx.items);
 
   const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
   const hasItems = cartCtx.items.length > 0;
@@ -25,6 +30,7 @@ const Cart = (props) => {
   };
 
   const submitOrderHandler = (userData) => {
+    setIsSubmiting(true);
     fetch('https://react-http-ffae2-default-rtdb.firebaseio.com/orders.json', {
       method: 'POST',
       body: JSON.stringify({
@@ -32,7 +38,8 @@ const Cart = (props) => {
         items: cartCtx.items,
       }),
     }).then(() => {
-      console.log('your order has been sent');
+      setIsSubmitted(true);
+      cartCtx.clearCart();
     });
   };
 
@@ -64,18 +71,26 @@ const Cart = (props) => {
     </div>
   );
 
-  return (
-    <Modal onClose={props.onClose}>
+  const cartModalContent = (
+    <>
       {!hasItems && <p>No Items added!</p>}
-
       {cartItems}
 
       <div className={classes.total}>
         <span>Total Amount</span>
         <span>{totalAmount}</span>
       </div>
+
       {isCheckout && <Checkout onCancel={props.onClose} onConfirm={submitOrderHandler} />}
       {!isCheckout && modalActions}
+    </>
+  );
+
+  return (
+    <Modal onClose={props.onClose}>
+      {!isSubmiting && cartModalContent}
+      {isSubmiting && !isSubmitted && <p>Sending...</p>}
+      {isSubmitted && <p>Your order has been sent</p>}
     </Modal>
   );
 };
